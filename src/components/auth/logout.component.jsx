@@ -1,8 +1,8 @@
 import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import useNavigate from "react-router-dom"
 
 async function logout(userToken) {
-  return await fetch('http://192.168.1.2:8000/api/logout', {
+  return await fetch('http://localhost:8000/api/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

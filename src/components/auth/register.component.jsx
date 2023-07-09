@@ -23,7 +23,7 @@ const Register = () => {
 
   const fetchBanks = async () => {
     try {
-      const resp = await axios.request('http://192.168.1.2:8000/api/banks');
+      const resp = await axios.request('http://localhost:8000/api/banks');
       return resp;
     } catch (error) {
 
@@ -69,7 +69,7 @@ const Register = () => {
       'acct_number': acctNumber,
     }
 
-    await axios.post('http://192.168.1.2:8000/api/register', request).then(({ data }) => {
+    await axios.post('http://localhost:8000/api/register', request).then(({ data }) => {
       Swal.fire({
         icon: "success",
         text: data.message

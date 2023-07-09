@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 async function login(credentials) {
-  return fetch('http://192.168.1.2:8000/api/login',{
+  return fetch('http://localhost:8000/api/login',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

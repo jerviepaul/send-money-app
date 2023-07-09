@@ -1,5 +1,4 @@
 import * as React from "react";
-import logo from './logo.svg';
 import './App.css';
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import 'bootstrap/dist/css/bootstrap.css';
 
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Register from "./components/auth/register.component";
 import Login from "./components/auth/login.component";
@@ -20,7 +19,7 @@ function App() {
   const [token, setToken] = React.useState()
   const hasToken = sessionStorage.getItem('token') !== null ? true : false;
   const pathName = window.location.pathname
-  
+
   return(<Router>
     <Navbar bg="primary">
       <Container>

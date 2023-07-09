@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 async function transfer(userToken, request) {
   try {
-    return fetch('http://192.168.1.2:8000/api/transfer/bank', {
+    return fetch('http://localhost:8000/api/transfer/bank', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const BankTransfer = ({bankTransferCallback}) => {
 
   async function getProviders () {
     try {
-      return fetch('http://192.168.1.2:8000/api/providers',{
+      return fetch('http://localhost:8000/api/providers',{
         method:'GET',
         headers:{
           'Content-Type': 'application/json',
@@ -63,11 +63,11 @@ const BankTransfer = ({bankTransferCallback}) => {
     getProviders().then(res => {
       setProviders(res.data)
     })
-  }, [])
+  }, [setProviders])
 
   async function getProviderBanks(id) {
     try {
-      return fetch('http://192.168.1.2:8000/api/provider/'+id+'/banks', {
+      return fetch('http://localhost:8000/api/provider/'+id+'/banks', {
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',

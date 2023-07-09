@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 async function transfer(userToken, request) {
   try {
-    return fetch('http://192.168.1.2:8000/api/transfer/user', {
+    return fetch('http://localhost:8000/api/transfer/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export default function UserTransfer({userTransferCallback})  {
 
   const fetchUsers = async () => {
     try {
-      return await fetch('http://192.168.1.2:8000/api/users', {
+      return await fetch('http://localhost:8000/api/users', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
