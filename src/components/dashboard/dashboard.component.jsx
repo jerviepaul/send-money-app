@@ -8,6 +8,27 @@ import BankTransfer from "./bankTransfer.component";
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
+async function fetchUserData(userId, token) {
+  try {
+    const data = await fetch('http://localhost:8000/api/user'+userId, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      }
+    }).then(data => data.json())
+    localStorage.removeItem('user')
+    localStorage.setItem('user', JSON.stringify(data.data[0]))
+  } catch (error) {
+    Swal.fire({
+      text: error.error,
+      timer: 3000,
+      icon: "error"
+    })
+  }
+}
+
+
 export default function Dashboard () {
   const {token, setToken} = useToken()
   const [transactionData, setTransactionData] = useState()
@@ -15,6 +36,14 @@ export default function Dashboard () {
   if(!token){
     {return <Navigate to={'/login'} />}
   }
+
+  const user = localStorage.getItem('user')
+  const jsonUser = JSON.parse(user)
+
+
+  useEffect(() => {
+    fetchUserData(jsonUser[0].id, token)
+  }, [])
 
   const userTransferCallback = (userTransferData) => {
     setTransactionData(userTransferData)
@@ -29,8 +58,6 @@ export default function Dashboard () {
   const userTransactionsCallback = (userTransactionsData) => {
   }
 
-  const user = localStorage.getItem('user')
-  const jsonUser = JSON.parse(user)
   const account = jsonUser[0].account
   
 
