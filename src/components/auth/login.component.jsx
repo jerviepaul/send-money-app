@@ -41,16 +41,16 @@ const Login = ({setToken}) => {
       timer: 3000,
     })
     
-    sessionStorage.setItem('token', JSON.stringify(data.data.token))
+    localStorage.setItem('token', JSON.stringify(data.data.token))
     setToken(data.data.token)
-    sessionStorage.setItem('user', JSON.stringify(data.data.user))
+    localStorage.setItem('user', JSON.stringify(data.data.user))
     navigate('/dashboard')
   }
 
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col-12 col-sm-12 col-md-6">
+        <div className="col-12 col-sm-12 col-md-4 small">
           <div className="card">
             <div className="card-body">
               <h4 className="card-title">Login</h4>
@@ -78,7 +78,7 @@ const Login = ({setToken}) => {
                     <Col>
                       <Form.Group controlId="Email">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" value={email} required onChange={(event)=> {
+                        <Form.Control className="small-font" type="email" value={email} required onChange={(event)=> {
                           setEmail(event.target.value)
                         }}/>
                       </Form.Group>
@@ -88,13 +88,13 @@ const Login = ({setToken}) => {
                     <Col>
                       <Form.Group controlId="Password">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" value={password} required onChange={(event)=> {
+                        <Form.Control className="small-font" type="password" value={password} required onChange={(event)=> {
                           setPassword(event.target.value)
                         }}/>
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Button variant="success" className="mt-2" size="lg" block="block" type="submit">
+                  <Button variant="success" className="small-font mt-2 text-center col-sm-12" size="lg" block="block" type="submit">
                     Login
                   </Button>
                 </Form>

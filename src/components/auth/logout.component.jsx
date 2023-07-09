@@ -1,32 +1,40 @@
-import { useEffect } from "react"
-import useNavigate from "react-router-dom"
+import React, { useEffect } from "react"
+import {  useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
 
 async function logout(userToken) {
-  return await fetch('http://localhost:8000/api/logout', {
+  var data =  await fetch('http://localhost:8000/api/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + userToken,
     },
     body:{'withCredentials': true},
-  }).then(data => data.json(), () =>{
+  }).then(data => data.json())
+  Swal.fire({
+    icon: "success",
+    text: data.message,
+    timer: 3000,
   })
 }
 
 export default function Logout() {
   const navigate = useNavigate()
-  const tokenString = sessionStorage.getItem('token')
+  const tokenString = localStorage.getItem('token')
   const userToken = JSON.parse(tokenString)
+  localStorage.clear()
 
   const handleLogout = (userToken) => {
     logout(userToken)
-    sessionStorage.removeItem('token')
-    sessionStorage.removeItem('user')
   }
 
   useEffect(() => {
     navigate('/login')
   }, [])
 
-  return handleLogout(userToken)
+  return (
+  
+    handleLogout(userToken)
+
+  )
 }

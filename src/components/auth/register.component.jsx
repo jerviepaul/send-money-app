@@ -90,8 +90,8 @@ const Register = () => {
 
   return (
     <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-12 col-sm-12 col-md-6">
+      <div className="row justify-content-center small">
+        <div className="col-12 col-sm-12 col-md-4">
           <div className="card">
             <div className="card-body">
               <h4 className="card-title">Register</h4>
@@ -119,7 +119,7 @@ const Register = () => {
                     <Col>
                       <Form.Group controlId="Name">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" value={name} required onChange={(event) => {
+                        <Form.Control className="small-font" type="text" value={name} required onChange={(event) => {
                           setName(event.target.value)
                         }} />
                       </Form.Group>
@@ -129,7 +129,7 @@ const Register = () => {
                     <Col>
                       <Form.Group controlId="Email">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" value={email} required onChange={(event) => {
+                        <Form.Control className="small-font" type="email" value={email} required onChange={(event) => {
                           setEmail(event.target.value)
                         }} />
                       </Form.Group>
@@ -139,7 +139,7 @@ const Register = () => {
                     <Col>
                       <Form.Group controlId="Password">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" value={password} required onChange={(event) => {
+                        <Form.Control className="small-font" type="password" value={password} required onChange={(event) => {
                           setPassword(event.target.value)
                         }} />
                       </Form.Group>
@@ -149,7 +149,7 @@ const Register = () => {
                     <Col>
                       <Form.Group controlId="Confirm Password">
                         <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control type="password" value={passwordConfirmation} required onChange={(event) => {
+                        <Form.Control className="small-font" type="password" value={passwordConfirmation} required onChange={(event) => {
                           setPasswordConfirmation(event.target.value)
                         }} />
                       </Form.Group>
@@ -159,7 +159,7 @@ const Register = () => {
                     <Col>
                       <Form.Group controlId="Bank">
                         <Form.Label>Bank</Form.Label>
-                        <Form.Select value={bankId} required onChange={(event) => {
+                        <Form.Select className="small-font" value={bankId} required onChange={(event) => {
                           setBankId(event.target.value)
                         }}>
                           <option value="">Select your bank.</option>
@@ -182,13 +182,13 @@ const Register = () => {
                     <Col>
                       <Form.Group controlId="Account Number">
                         <Form.Label>Account Number</Form.Label>
-                        <Form.Control type="text" value={acctNumber} required onChange={(event) => {
+                        <Form.Control className="small-font" type="text" value={acctNumber} required onChange={(event) => {
                           setAcctNumber(event.target.value)
                         }} />
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Button variant="success" className="mt-2" size="lg" block="block" type="submit">
+                  <Button variant="success" className="small-font mt-2 text-center col-sm-12" size="lg" block="block" type="submit">
                     Register
                   </Button>
                 </Form>

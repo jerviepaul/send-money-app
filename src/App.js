@@ -17,7 +17,7 @@ import Logout from "./components/auth/logout.component";
 function App() {
 
   const [token, setToken] = React.useState()
-  const hasToken = sessionStorage.getItem('token') !== null ? true : false;
+  const hasToken = localStorage.getItem('token') === null || localStorage.getItem('token') === undefined ? false : true;
   const pathName = window.location.pathname
 
   return(<Router>
@@ -28,18 +28,35 @@ function App() {
         </Nav.Link>
       </Container>
       {
-        hasToken ? (
+        hasToken && (
           <Nav className="ml-auto">
             <Nav.Link className="active text-white" href="/logout">Logout</Nav.Link>
           </Nav>
-        ) : (
+        )
+      }
+      {
+        !hasToken && (
           pathName === '/register' && (
             <Nav className="ml-auto text-white">
               <Nav.Link className="active text-white" href="/login">Login</Nav.Link>
               <Nav.Link className="disabled" href="">Register</Nav.Link>
             </Nav>
-          ),
+          )
+        )
+      }
+      {
+        !hasToken && (
           pathName === '/login' && (
+            <Nav className="ml-auto">
+              <Nav.Link className="disabled" href="">Login</Nav.Link>
+              <Nav.Link className="active text-white" href="/register">Register</Nav.Link>
+            </Nav>
+          )
+        )
+      }
+      {
+        !hasToken && (
+          pathName === '/' && (
             <Nav className="ml-auto">
               <Nav.Link className="disabled" href="">Login</Nav.Link>
               <Nav.Link className="active text-white" href="/register">Register</Nav.Link>

@@ -34,9 +34,9 @@ const BankTransfer = ({bankTransferCallback}) => {
   const [providers, setProviders] = useState([])
   const [banks, setBanks] = useState([])
 
-  const tokenString = sessionStorage.getItem('token')
+  const tokenString = localStorage.getItem('token')
   const userToken = JSON.parse(tokenString)
-  const user = sessionStorage.getItem('user')
+  const user = localStorage.getItem('user')
   const jsonUser = JSON.parse(user)
   const account = jsonUser[0].account
 
@@ -126,8 +126,8 @@ const BankTransfer = ({bankTransferCallback}) => {
     }
 
     const userSession = JSON.stringify(data.data)
-    sessionStorage.removeItem('user')
-    sessionStorage.setItem('user', userSession)
+    localStorage.removeItem('user')
+    localStorage.setItem('user', userSession)
     bankTransferCallback(userSession)
     Swal.fire({
       icon:"success",

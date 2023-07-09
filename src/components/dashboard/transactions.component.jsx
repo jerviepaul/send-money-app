@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 
 export default function Transactions ( {userTransactionsCallback} ) {
 
-  const user = sessionStorage.getItem('user')
+  const user = localStorage.getItem('user')
   const jsonUser = JSON.parse(user)
   const transactionsData = jsonUser[0].transactions
   userTransactionsCallback()

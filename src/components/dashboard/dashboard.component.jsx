@@ -6,13 +6,14 @@ import Transactions from "./transactions.component";
 import UserTransfer from "./userTransfer.component";
 import BankTransfer from "./bankTransfer.component";
 import React, { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 export default function Dashboard () {
   const {token, setToken} = useToken()
   const [transactionData, setTransactionData] = useState()
   
   if(!token){
-    {return <Login setToken={setToken}/>}
+    {return <Navigate to={'/login'} />}
   }
 
   const userTransferCallback = (userTransferData) => {
@@ -28,7 +29,7 @@ export default function Dashboard () {
   const userTransactionsCallback = (userTransactionsData) => {
   }
 
-  const user = sessionStorage.getItem('user')
+  const user = localStorage.getItem('user')
   const jsonUser = JSON.parse(user)
   const account = jsonUser[0].account
   

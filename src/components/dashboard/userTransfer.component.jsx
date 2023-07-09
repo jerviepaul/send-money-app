@@ -31,9 +31,9 @@ export default function UserTransfer({userTransferCallback})  {
   const [amount, setAmount] = useState('0.00')
   const [users, setUsers] = useState([])
 
-  const tokenString = sessionStorage.getItem('token')
+  const tokenString = localStorage.getItem('token')
   const userToken = JSON.parse(tokenString)
-  const user = sessionStorage.getItem('user')
+  const user = localStorage.getItem('user')
   const jsonUser = JSON.parse(user)
   const account = jsonUser[0].account
 
@@ -47,7 +47,11 @@ export default function UserTransfer({userTransferCallback})  {
         },
       }).then(data => data.json())
     } catch (error) {
-
+      Swal.fire({
+        icon: "error",
+        text: error.message,
+        timer: 3000,
+      })
     }
   }
 
@@ -87,8 +91,8 @@ export default function UserTransfer({userTransferCallback})  {
     }
 
     const userSession = JSON.stringify(data.data)
-    sessionStorage.removeItem('user')
-    sessionStorage.setItem('user', userSession)
+    localStorage.removeItem('user')
+    localStorage.setItem('user', userSession)
     userTransferCallback(userSession)
     Swal.fire({
       icon:"success",
