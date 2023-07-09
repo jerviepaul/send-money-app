@@ -4,6 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+Clone repo.
+```bash
+git clone https://github.com/jerviepaul/send-money-app.git
+```
+
 In the project directory, you can run:
 
 ### `npm start`
