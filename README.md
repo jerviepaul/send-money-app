@@ -11,7 +11,7 @@ git clone https://github.com/jerviepaul/send-money-app.git
 
 Install using [composer](https://getcomposer.org/download/).
 ```bash
-composer install
+npm install
 ```
 
 In the project directory, you can run:
