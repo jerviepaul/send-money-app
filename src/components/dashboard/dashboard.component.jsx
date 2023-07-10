@@ -27,16 +27,6 @@ export default function Dashboard () {
     }
   }
   
-  useEffect(() => {
-    if (token) {
-      console.log(token, jsonUser[0].id)
-      fetchUserData(jsonUser[0].id, token).then(res => {
-        console.log(res)
-        localStorage.setItem('user', JSON.stringify(res.data))
-      })
-    }
-  }, [])
-
   if(!token){
     {return <Navigate to={'/login'} />}
   }
@@ -54,10 +44,24 @@ export default function Dashboard () {
   const userTransactionsCallback = (userTransactionsData) => {
   }
 
-  const user = localStorage.getItem('user')
-  const jsonUser = JSON.parse(user)
-  const account = jsonUser[0].account
+  let user = localStorage.getItem('user')
+  let jsonUser = JSON.parse(user)
+  let account = jsonUser[0].account
   
+  // useEffect(() => {
+    if (token) {
+      fetchUserData(jsonUser[0].id, token).then(res => {
+        localStorage.setItem('user', JSON.stringify(res.data))
+        user = localStorage.getItem('user')
+        jsonUser = JSON.parse(user)
+        account = jsonUser[0].account
+        document.getElementById("acct_balance").innerHTML = numberWithCommas(account.acct_balance.toFixed(2))
+      })
+    }
+  // }, [])
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
   return (
     <>
@@ -70,7 +74,7 @@ export default function Dashboard () {
           <div className="card card-margin-bottom">
             <div className="card-body">
               <div className="card-title">
-                <h5>Balance: <NumericFormat prefix="&#8369;" value={(account.acct_balance).toFixed(2)} displayType={'text'} thousandSeparator={true} /></h5>
+                <h5>Balance: &#8369;<NumericFormat id="acct_balance" prefix="" value={(account.acct_balance).toFixed(2)} displayType={'text'} thousandSeparator={true} /></h5>
                 <hr />
                 <Row>
                     <UserTransfer userTransferCallback={userTransferCallback} />
