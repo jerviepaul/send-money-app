@@ -8,13 +8,28 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 async function login(credentials) {
-  return fetch('http://localhost:8000/api/login',{
+  return await fetch('http://localhost:8000/api/login',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(credentials)
-  }).then(data => data.json())
+  }).then((response) => {
+    if (response.ok) {
+      return response.json()
+    } else {
+      
+      Swal.fire({
+        text: response.statusText,
+        timer: 3000,
+        icon: "error"
+      })
+    }
+  })
+  .catch((error) => {
+    console.log(error)
+    return error
+  })
 }
 
 const Login = ({setToken}) => {
@@ -35,16 +50,19 @@ const Login = ({setToken}) => {
       password,
       'withCredentials': true,
     })
-    Swal.fire({
-      icon:"success",
-      text:data.message,
-      timer: 3000,
-    })
+    if (data !== undefined) {
+      Swal.fire({
+        icon:"success",
+        text:data.message,
+        timer: 3000,
+      })
+      
+      localStorage.setItem('token', JSON.stringify(data.data.token))
+      setToken(data.data.token)
+      localStorage.setItem('user', JSON.stringify(data.data.user))
+      navigate('/dashboard')
+    }
     
-    localStorage.setItem('token', JSON.stringify(data.data.token))
-    setToken(data.data.token)
-    localStorage.setItem('user', JSON.stringify(data.data.user))
-    navigate('/dashboard')
   }
 
   return (

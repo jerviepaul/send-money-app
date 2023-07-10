@@ -1,4 +1,3 @@
-import Login from "../auth/login.component";
 import useToken from "../../app/useToken";
 import { NumericFormat } from "react-number-format";
 import { Col, Row } from "react-bootstrap";
@@ -8,42 +7,39 @@ import BankTransfer from "./bankTransfer.component";
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
-async function fetchUserData(userId, token) {
-  try {
-    const data = await fetch('http://localhost:8000/api/user'+userId, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token,
-      }
-    }).then(data => data.json())
-    localStorage.removeItem('user')
-    localStorage.setItem('user', JSON.stringify(data.data[0]))
-  } catch (error) {
-    Swal.fire({
-      text: error.error,
-      timer: 3000,
-      icon: "error"
-    })
-  }
-}
-
 
 export default function Dashboard () {
   const {token, setToken} = useToken()
   const [transactionData, setTransactionData] = useState()
   
+
+  const fetchUserData = async (userId, token) => {
+    try {
+      return await fetch('http://localhost:8000/api/users/'+userId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        }
+      }).then(data => data.json())
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  useEffect(() => {
+    if (token) {
+      console.log(token, jsonUser[0].id)
+      fetchUserData(jsonUser[0].id, token).then(res => {
+        console.log(res)
+        localStorage.setItem('user', JSON.stringify(res.data))
+      })
+    }
+  }, [])
+
   if(!token){
     {return <Navigate to={'/login'} />}
   }
-
-  const user = localStorage.getItem('user')
-  const jsonUser = JSON.parse(user)
-
-
-  useEffect(() => {
-    fetchUserData(jsonUser[0].id, token)
-  }, [])
 
   const userTransferCallback = (userTransferData) => {
     setTransactionData(userTransferData)
@@ -58,6 +54,8 @@ export default function Dashboard () {
   const userTransactionsCallback = (userTransactionsData) => {
   }
 
+  const user = localStorage.getItem('user')
+  const jsonUser = JSON.parse(user)
   const account = jsonUser[0].account
   
 

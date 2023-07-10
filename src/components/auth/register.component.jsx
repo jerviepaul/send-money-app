@@ -69,19 +69,20 @@ const Register = () => {
       'acct_number': acctNumber,
     }
 
-    await axios.post('http://localhost:8000/api/register', request).then(({ data }) => {
+    await axios.post('http://localhost:8000/api/register', request)
+    .then((data) => {
       Swal.fire({
         icon: "success",
         text: data.message
       })
       clearForm()
-      navigate("/")
-    }).catch(({ response }) => {
+      navigate("/dashboard")
+    }).catch((response) => {
       if (response.status === 404) {
-        setValidationError([response.data.message])
+        setValidationError([response])
       } else {
         Swal.fire({
-          text: response.data.message,
+          text: response.message,
           icon: "error"
         })
       }
