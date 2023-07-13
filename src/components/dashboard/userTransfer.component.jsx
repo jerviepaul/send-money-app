@@ -77,7 +77,7 @@ export default function UserTransfer({userTransferCallback})  {
 
     const request = {
       'email': email,
-      'amount': amount
+      'amount': Number(amount).toFixed(2).toString()
     }
 
     const data = await transfer(userToken, request)

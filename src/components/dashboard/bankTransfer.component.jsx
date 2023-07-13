@@ -112,7 +112,7 @@ const BankTransfer = ({bankTransferCallback}) => {
       'provider_id': providerId,
       'bank_id': bankId,
       'acct_number': acctNumber,
-      'amount': amount
+      'amount': Number(amount).toFixed(2).toString()
     }
 
     const data = await transfer(userToken, request)
