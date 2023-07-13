@@ -29,7 +29,7 @@ export default function Logout() {
   }
 
   useEffect(() => {
-    navigate('/login')
+    return navigate('/login')
   }, [])
 
   return (

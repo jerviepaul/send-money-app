@@ -5,12 +5,13 @@ import Transactions from "./transactions.component";
 import UserTransfer from "./userTransfer.component";
 import BankTransfer from "./bankTransfer.component";
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Dashboard () {
   const {token, setToken} = useToken()
   const [transactionData, setTransactionData] = useState()
+  const navigate = useNavigate()
   
 
   const fetchUserData = async (userId, token) => {
@@ -24,11 +25,14 @@ export default function Dashboard () {
       }).then(data => data.json())
     } catch (error) {
       console.log(error)
+      // {<Navigate to={'/login'} />}
+      return navigate('/login')
     }
   }
   
   if(!token){
-    {return <Navigate to={'/login'} />}
+    // {return <Navigate to={'/login'} />}
+    return navigate('/login')
   }
 
   const userTransferCallback = (userTransferData) => {
@@ -46,23 +50,27 @@ export default function Dashboard () {
 
   let user = localStorage.getItem('user')
   let jsonUser = JSON.parse(user)
-  let account = jsonUser[0].account
-  
-  // useEffect(() => {
-    if (token) {
-      fetchUserData(jsonUser[0].id, token).then(res => {
-        localStorage.setItem('user', JSON.stringify(res.data))
-        user = localStorage.getItem('user')
-        jsonUser = JSON.parse(user)
-        account = jsonUser[0].account
-        document.getElementById("acct_balance").innerHTML = numberWithCommas(account.acct_balance.toFixed(2))
-      })
-    }
-  // }, [])
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
 
+  if (jsonUser.error === "Unauthorized" || !token) {
+    localStorage.clear()
+    setToken('')
+    return navigate('/login')
+  } else {
+    fetchUserData(jsonUser[0].id, token).then(res => {
+      console.log(res)
+      if (res.success == false) {
+        console.log(res.success)
+        // return <Navigate to={'/'} />
+        return navigate('/login')
+      }
+      localStorage.setItem('user', JSON.stringify(res.data))
+      user = localStorage.getItem('user')
+      jsonUser = JSON.parse(user)
+      account = jsonUser[0].account
+      document.getElementById("acct_balance").innerHTML = numberWithCommas(account.acct_balance.toFixed(2))
+    })
+    let account = jsonUser[0].account
+    
   return (
     <>
     <div className="container">
@@ -103,4 +111,11 @@ export default function Dashboard () {
     </div>
     </>
   )
+  }
+  
+  
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
 }
